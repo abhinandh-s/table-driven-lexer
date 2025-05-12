@@ -48,5 +48,10 @@ syntaxkind! {
     Error,
     Root,
     VarDecl,
+    DoubleColon,
+    EqualLess,
+    EqualEqual,
+    FatArrow,
+    ColonEqual,
     NewLine
 }
