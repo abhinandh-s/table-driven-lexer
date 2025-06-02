@@ -257,3 +257,29 @@ fn lex_operator(chars: &mut Peekable<Chars>, trie: &TrieNode) -> Option<TokenDat
 
     matched.map(|(kind, text)| TokenData { kind, text })
 }
+
+
+fn take_while<F: Fn(char) -> bool>(chars: &mut Peekable<Chars>, pred: F) -> String {
+    let mut result = String::new();
+    while let Some(&c) = chars.peek() {
+        if pred(c) {
+            chars.next();
+            result.push(c);
+        } else {
+            break;
+        }
+    }
+    result
+}
+
+fn lex_whitespace(chars: &mut Peekable<Chars>) -> Option<TokenData> {
+    let text = take_while(chars, |c| c.is_whitespace() && c != '\n');
+    if text.is_empty() {
+        None
+    } else {
+        Some(TokenData {
+            kind: SyntaxKind::Whitespace,
+            text,
+        })
+    }
+}
